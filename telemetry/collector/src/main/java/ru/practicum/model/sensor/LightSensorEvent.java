@@ -3,11 +3,13 @@ package ru.practicum.model.sensor;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import ru.practicum.model.sensor.enums.SensorEventType;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LightSensorEvent extends SensorEvent {
     Integer linkQuality;

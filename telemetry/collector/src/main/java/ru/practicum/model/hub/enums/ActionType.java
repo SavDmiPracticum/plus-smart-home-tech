@@ -1,6 +1,6 @@
 package ru.practicum.model.hub.enums;
 
-public enum DeviceActionType {
+public enum ActionType {
     ACTIVATE,
     DEACTIVATE,
     INVERSE,

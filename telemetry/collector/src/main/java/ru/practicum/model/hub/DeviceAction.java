@@ -4,13 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
-import ru.practicum.model.hub.enums.DeviceActionType;
+import ru.practicum.model.hub.enums.ActionType;
 
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeviceAction {
     String sensorId;
-    DeviceActionType type;
+    ActionType type;
     Integer value;
 }
