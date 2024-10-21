@@ -30,7 +30,7 @@ public class HubScenarioAddedEventHandler extends CommonHubEventHandler<Scenario
                 .build();
     }
 
-    private static List<ScenarioConditionAvro> getScenarioConditionAvroList(ScenarioAddedEvent scenarioAddedEvent) {
+    private List<ScenarioConditionAvro> getScenarioConditionAvroList(ScenarioAddedEvent scenarioAddedEvent) {
         return scenarioAddedEvent.getConditions().stream()
                 .map(c -> ScenarioConditionAvro.newBuilder()
                         .setSensorId(c.getSensorId())
@@ -41,7 +41,7 @@ public class HubScenarioAddedEventHandler extends CommonHubEventHandler<Scenario
                 .toList();
     }
 
-    private static List<DeviceActionAvro> getDeviceActionAvroList(ScenarioAddedEvent scenarioAddedEvent) {
+    private List<DeviceActionAvro> getDeviceActionAvroList(ScenarioAddedEvent scenarioAddedEvent) {
         return scenarioAddedEvent.getActions().stream()
                 .map(a -> DeviceActionAvro.newBuilder()
                         .setSensorId(a.getSensorId())
