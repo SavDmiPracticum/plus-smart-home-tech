@@ -24,6 +24,6 @@ public abstract class CommonHubEventHandler<T extends SpecificRecordBase> {
                 .setPayload(avroObject)
                 .build();
         String topic = config.getTopicTelemetryHubs();
-        producer.send(topic, hubEventAvro);
+        producer.send(topic, event.getHubId(), hubEventAvro);
     }
 }

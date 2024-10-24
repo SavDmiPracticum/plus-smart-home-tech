@@ -25,6 +25,6 @@ public abstract class CommonSensorEventHandler<T extends SpecificRecordBase> {
                 .setPayload(avroObject)
                 .build();
         String topic = config.getTopicTelemetrySensors();
-        producer.send(topic, sensorEventAvro);
+        producer.send(topic, event.getHubId(), sensorEventAvro);
     }
 }

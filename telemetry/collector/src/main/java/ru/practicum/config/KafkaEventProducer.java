@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class KafkaEventProducer {
     private final KafkaProducer<String, SpecificRecordBase> kafkaProducer;
 
-    public <T extends SpecificRecordBase> void send(String topic, T record) {
-        ProducerRecord<String, SpecificRecordBase> producerRecord = new ProducerRecord<>(topic, record);
+    public <T extends SpecificRecordBase> void send(String topic, String key, T record) {
+        ProducerRecord<String, SpecificRecordBase> producerRecord = new ProducerRecord<>(topic, key, record);
 
         kafkaProducer.send(producerRecord, (metadata, exception) -> {
             if (exception != null) {
