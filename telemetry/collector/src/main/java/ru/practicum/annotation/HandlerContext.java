@@ -7,8 +7,8 @@ import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.stereotype.Component;
 import ru.practicum.handler.CommonHubEventHandler;
 import ru.practicum.handler.CommonSensorEventHandler;
-import ru.practicum.model.hub.enums.HubEventType;
-import ru.practicum.model.sensor.enums.SensorEventType;
+import ru.yandex.practicum.grpc.telemetry.event.HubEventProto;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +34,7 @@ public class HandlerContext {
                 .collect(Collectors.toMap(HandlerContext::getValueSensor, h -> h));
     }
 
-    private static HubEventType getValueHub(CommonHubEventHandler<?> handler) {
+    private static HubEventProto.PayloadCase getValueHub(CommonHubEventHandler<?> handler) {
         HandlerHubEvent handlerAnnotation = handler.getClass().getAnnotation(HandlerHubEvent.class);
         if (handlerAnnotation == null) {
             throw new IllegalArgumentException("No annotation found for " + handler.getClass().getName());
@@ -42,7 +42,7 @@ public class HandlerContext {
         return handlerAnnotation.value();
     }
 
-    private static SensorEventType getValueSensor(CommonSensorEventHandler<?> handler) {
+    private static SensorEventProto.PayloadCase getValueSensor(CommonSensorEventHandler<?> handler) {
         HandlerSensorEvent handlerAnnotation = handler.getClass().getAnnotation(HandlerSensorEvent.class);
         if (handlerAnnotation == null) {
             throw new IllegalArgumentException("No annotation found for " + handler.getClass().getName());
