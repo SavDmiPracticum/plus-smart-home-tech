@@ -5,12 +5,11 @@ import ru.practicum.annotation.HandlerSensorEvent;
 import ru.practicum.config.AppConfig;
 import ru.practicum.config.KafkaEventProducer;
 import ru.practicum.handler.CommonSensorEventHandler;
-import ru.practicum.model.sensor.SensorEvent;
-import ru.practicum.model.sensor.TemperatureSensorEvent;
-import ru.practicum.model.sensor.enums.SensorEventType;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
+import ru.yandex.practicum.grpc.telemetry.event.TemperatureSensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.TemperatureSensorAvro;
 
-@HandlerSensorEvent(SensorEventType.TEMPERATURE_SENSOR_EVENT)
+@HandlerSensorEvent(SensorEventProto.PayloadCase.TEMPERATURE_SENSOR_EVENT)
 @Component
 public class TemperatureSensorEventHandler extends CommonSensorEventHandler<TemperatureSensorAvro> {
     public TemperatureSensorEventHandler(AppConfig config, KafkaEventProducer producer) {
@@ -18,8 +17,8 @@ public class TemperatureSensorEventHandler extends CommonSensorEventHandler<Temp
     }
 
     @Override
-    protected TemperatureSensorAvro mapToAvroObject(SensorEvent event) {
-        TemperatureSensorEvent sensorEvent = (TemperatureSensorEvent) event;
+    protected TemperatureSensorAvro mapToAvroObject(SensorEventProto event) {
+        TemperatureSensorEventProto sensorEvent = event.getTemperatureSensorEvent();
         return TemperatureSensorAvro.newBuilder()
                 .setTemperatureC(sensorEvent.getTemperatureC())
                 .setTemperatureF(sensorEvent.getTemperatureF())

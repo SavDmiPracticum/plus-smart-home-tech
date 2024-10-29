@@ -5,8 +5,10 @@ import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.stereotype.Component;
 import ru.practicum.config.AppConfig;
 import ru.practicum.config.KafkaEventProducer;
-import ru.practicum.model.sensor.SensorEvent;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.SensorEventAvro;
+
+import java.time.Instant;
 
 @Component
 @RequiredArgsConstructor
@@ -14,14 +16,15 @@ public abstract class CommonSensorEventHandler<T extends SpecificRecordBase> {
     private final AppConfig config;
     private final KafkaEventProducer producer;
 
-    protected abstract T mapToAvroObject(SensorEvent event);
+    protected abstract T mapToAvroObject(SensorEventProto event);
 
-    public void handle(SensorEvent event) {
+    public void handle(SensorEventProto event) {
         T avroObject = mapToAvroObject(event);
         SensorEventAvro sensorEventAvro = SensorEventAvro.newBuilder()
                 .setId(event.getId())
                 .setHubId(event.getHubId())
-                .setTimestamp(event.getTimestamp())
+                .setTimestamp(Instant.ofEpochSecond(
+                        event.getTimestamp().getSeconds(), event.getTimestamp().getNanos()))
                 .setPayload(avroObject)
                 .build();
         String topic = config.getTopicTelemetrySensors();
