@@ -5,12 +5,11 @@ import ru.practicum.annotation.HandlerSensorEvent;
 import ru.practicum.config.AppConfig;
 import ru.practicum.config.KafkaEventProducer;
 import ru.practicum.handler.CommonSensorEventHandler;
-import ru.practicum.model.sensor.SensorEvent;
-import ru.practicum.model.sensor.SwitchSensorEvent;
-import ru.practicum.model.sensor.enums.SensorEventType;
+import ru.yandex.practicum.grpc.telemetry.event.SensorEventProto;
+import ru.yandex.practicum.grpc.telemetry.event.SwitchSensorEventProto;
 import ru.yandex.practicum.kafka.telemetry.event.SwitchSensorAvro;
 
-@HandlerSensorEvent(SensorEventType.SWITCH_SENSOR_EVENT)
+@HandlerSensorEvent(SensorEventProto.PayloadCase.SWITCH_SENSOR_EVENT)
 @Component
 public class SwitchSensorEventHandler extends CommonSensorEventHandler<SwitchSensorAvro> {
     public SwitchSensorEventHandler(AppConfig config, KafkaEventProducer producer) {
@@ -18,8 +17,8 @@ public class SwitchSensorEventHandler extends CommonSensorEventHandler<SwitchSen
     }
 
     @Override
-    protected SwitchSensorAvro mapToAvroObject(SensorEvent event) {
-        SwitchSensorEvent sensorEvent = (SwitchSensorEvent) event;
+    protected SwitchSensorAvro mapToAvroObject(SensorEventProto event) {
+        SwitchSensorEventProto sensorEvent = event.getSwitchSensorEvent();
         return SwitchSensorAvro.newBuilder()
                 .setState(sensorEvent.getState())
                 .build();
