@@ -1,4 +1,4 @@
-package ru.yandex.practicum.exception.model;
+package ru.yandex.practicum.commonModel;
 
 import lombok.AccessLevel;
 import lombok.Builder;
