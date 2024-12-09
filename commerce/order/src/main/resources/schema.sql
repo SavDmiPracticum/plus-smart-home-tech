@@ -1,5 +1,3 @@
-drop table if exists orders, order_items;
-
 create table if not exists orders
 (
     order_id         uuid default gen_random_uuid() primary key,

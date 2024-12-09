@@ -1,5 +1,3 @@
-drop table if exists payments;
-
 create table if not exists payments
 (
     payment_id     uuid default gen_random_uuid() primary key,
